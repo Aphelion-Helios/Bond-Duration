@@ -1,0 +1,95 @@
+// This code is working 
+
+//  main.cpp 
+
+//  DiscreteBondPrice 
+
+// 
+
+//  Created by Brian Byrne on 10/12/2015. 
+
+ 
+
+#include <cmath> 
+
+#include <iostream> 
+
+using namespace std; 
+
+ 
+
+double PVBdur(double Face,double cr,double r, int m, double T) 
+
+{ 
+
+    // store the value of the bond 
+
+    double BV1=0.; 
+
+    double BV2=0.; 
+
+    double Dur = 0.; 
+
+    double rr = r + 0.000001; 
+
+     
+
+     
+
+    // add in coupons 
+
+    int TNC=T*m; 
+
+    double cpn = (cr/m)*Face; 
+
+    for(int i=1;i<=TNC; i++) 
+
+	{ 
+
+         
+
+    	BV1 = BV1 + cpn*pow((1+r/m),-i); 
+
+    	BV2 = BV2 + cpn*pow((1+rr/m),-i); 
+
+	} 
+
+    // finally add principle 
+
+     
+
+	BV1 = BV1 + Face*pow((1+r/m),-T*m); 
+
+	BV2 = BV2 + Face*pow((1+rr/m),-T*m); 
+
+    Dur = ((BV2 - BV1)/BV1)*(1+r/m)/(r-rr); 
+
+    return Dur; 
+
+} 
+
+ 
+
+int main() 
+
+{ 
+
+    double Face = 1000; 
+
+    double cr = 0.06; 
+
+    double r =0.056; 
+
+    int m = 2; 
+
+    double T =3; 
+
+     
+
+    cout << " The Duration of the Discrete bond is " << PVBdur(Face, cr, r, m, T) <<endl; 
+
+    system ("PAUSE"); 
+
+     
+
+} 
